@@ -177,8 +177,6 @@ export async function fetchUserByEmail(email) {
 }
 
 export async function doCredentialLogin(formData) {
-  console.log("formData", formData);
-
   try {
     const response = await signIn("credentials", {
       email: formData.get("email"),
@@ -190,21 +188,4 @@ export async function doCredentialLogin(formData) {
     throw err;
   }
 }
-
-export async function authenticate(formData) { 
-    try {
-      await signIn('credentials', formData);
-    } catch (error) {
-      if (error instanceof AuthError) {
-        switch (error.type) {
-          case 'CredentialsSignin':
-            return 'Invalid credentials.';
-          default:
-            return 'Something went wrong.';
-        }
-      }
-      throw error;
-    }
-    console.log('User logged in');
-  }
 

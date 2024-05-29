@@ -1,9 +1,13 @@
+'use client'
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowLeftStartOnRectangleIcon, CogIcon, UserIcon, UserGroupIcon, ChevronDownIcon} from '@heroicons/react/24/outline';
+import UserName from "./userName"
 
 const DropdownUser = () => {
+
+
   const [dropdownOpen, setDropdownOpen] = useState(false)
 
   const trigger = useRef(null)
@@ -45,7 +49,7 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+          <UserName/>
           </span>
           <span className="block text-xs">UX Designer</span>
         </span>

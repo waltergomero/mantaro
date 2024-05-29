@@ -1,46 +1,82 @@
-import NextAuth, { User, NextAuthConfig } from "next-auth";
-import Credentials from "next-auth/providers/credentials";
+import NextAuth from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
+import GitHubProvider from "next-auth/providers/github";
+import CredentialsProvider from "next-auth/providers/credentials";
+import bcryptjs from 'bcryptjs';
+
+import {fetchUserByEmail} from '@/actions/user-actions'
 
 export const BASE_PATH = "/api/auth";
 
-const authOptions = {
-  providers: [
-    Credentials({
-      name: "Credentials",
-      credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials){
-        const users = [
-          {
-            id: "test-user-1",
-            userName: "test1",
-            name: "Test 1",
-            password: "pass",
-            email: "test1@donotreply.com",
-          },
-          {
-            id: "test-user-2",
-            userName: "test2",
-            name: "Test 2",
-            password: "pass",
-            email: "test2@donotreply.com",
-          },
-        ];
-        const user = users.find(
-          (user) =>
-            user.userName === credentials.username &&
-            user.password === credentials.password
-        );
-        return user
-          ? { id: user.id, name: user.name, email: user.email }
-          : null;
-      },
-    }),
-  ],
-  basePath: BASE_PATH,
-  secret: process.env.AUTH_SECRET,
-};
+export const {handlers, auth, signIn, signOut,} = NextAuth({  session: {   strategy: 'jwt',},
+    providers: [
+        CredentialsProvider({
+            credentials: {
+                Email: {},
+                Password: {},
+            },
+            async authorize(credentials) {
+                if (credentials === null) return null;
+                
+                try {
+                    const { email, password } = credentials;
 
-export const { handlers, auth, signIn, signOut } = NextAuth(authOptions);
+                    const user = await fetchUserByEmail(email);
+                    if (user) {
+                        const isMatch =  await bcryptjs.compare(password, user.password); 
+
+                        if (isMatch) {
+                            return user;
+                        } else {
+                            throw new Error("Email or Password is not correct");
+                        }
+                    } else {
+                        throw new Error("User not found");
+                    }
+                } catch (error) {
+                    throw new Error(error);
+                }
+            },
+        }),
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            authorization: {
+                params: {
+                    prompt: "consent",
+                    access_type: "offline",
+                    response_type: "code",
+                },
+            },
+        }),
+        GitHubProvider({
+            clientId: process.env.GITHUB_CLIENT_ID,
+            clientSecret: process.env.GITHUB_CLIENT_SECRET,
+            authorization: {
+                params: {
+                    prompt: "consent",
+                    access_type: "offline",
+                    response_type: "code",
+                },
+            },
+        }),
+    ],
+    callbacks: {
+        async jwt({ token, user }) {
+          if (user?._id) token._id = user._id;
+          if (user?.isAdmin) token.isAdmin = user.isAdmin;
+          if (user?.isActive) token.isActive = user.isActive;
+          if (user?.first_name) token.first_name = user.first_name;
+          if (user?.last_name) token.last_name = user.last_name;
+          return token;
+        },
+        async session({ session, token }) {
+          if (token?._id) session.user._id = token._id;
+          if (token?.isAdmin) session.user.isAdmin = token.isAdmin;
+          if (token?.isActive) session.user.isActive = token.isActive;
+          if (token?.first_name) session.user.first_name = token.first_name;
+          if (token?.last_name) session.user.last_name = token.last_name;
+          return session;
+        },
+      },
+});

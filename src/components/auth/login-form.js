@@ -1,39 +1,42 @@
 'use client';
-
-import { authenticate } from '@/actions/user-actions';
 import {
   AtSymbolIcon,
   KeyIcon,
   ExclamationCircleIcon,
 } from '@heroicons/react/24/outline';
 import { useFormState, useFormStatus } from 'react-dom';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { doCredentialLogin } from '@/actions/user-actions';
 
 
 import Link from 'next/link';
 
 const LoginForm = () => {
 
-  //const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+  const router = useRouter();
+  const [error, setError] = useState("");
+
   async function onSubmit(event) {
     event.preventDefault();
     try {
         const formData = new FormData(event.currentTarget);
-
         const response = await doCredentialLogin(formData);
 
         if (!!response.error) {
-            console.error(response.error);
+            console.error("error 1: ", response.error);
             setError(response.error.message);
         } else {
-            router.push("/home");
+            router.push("/dashboard");
         }
     } catch (e) {
-        console.error(e);
+       console.error("error 2: ", e);
         setError("Check your Credentials");
     }
 }
 
   return (
+  
     <form onSubmit={onSubmit}>
     <div className="p-6.5">
         <div className="mb-4">
@@ -104,16 +107,17 @@ const LoginForm = () => {
       Sign In
     </button>
     </div>
-    {/* <div className="flex h-8 items-end space-x-1 mt-2" aria-live="polite" aria-atomic="true" >
-          {errorMessage && (
+    <div className="flex h-8 items-end space-x-1 mt-2" aria-live="polite" aria-atomic="true" >
+          {error && (
             <>
               <ExclamationCircleIcon className="h-6 w-6 text-danger" />
-              <p className="text-md text-danger">{errorMessage}</p>
+              <p className="text-md text-danger">{error}</p>
             </>
           )}
-        </div> */}
+        </div>
         </div>
     </form>
+
   )
 }
 

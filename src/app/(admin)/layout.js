@@ -2,6 +2,7 @@
 import React, { useState, ReactNode } from "react";
 import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
+import Provider from '../../providers/index';
 
 
 export default function DashboardLayout({
@@ -11,6 +12,7 @@ export default function DashboardLayout({
   return (
     <html lang="en">
     <body suppressHydrationWarning={true}>
+    <Provider>
       <div className="flex h-screen overflow-hidden">
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
@@ -22,6 +24,7 @@ export default function DashboardLayout({
           </main>
         </div>
       </div>
+      </Provider>
       </body>
     </html>
   );
