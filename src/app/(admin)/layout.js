@@ -10,8 +10,7 @@ export default function DashboardLayout({
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
-    <html lang="en">
-    <body suppressHydrationWarning={true}>
+
     <Provider>
       <div className="flex h-screen overflow-hidden">
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
@@ -25,7 +24,6 @@ export default function DashboardLayout({
         </div>
       </div>
       </Provider>
-      </body>
-    </html>
+
   );
 }

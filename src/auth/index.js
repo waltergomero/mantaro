@@ -79,4 +79,7 @@ export const {handlers, auth, signIn, signOut,} = NextAuth({  session: {   strat
           return session;
         },
       },
+      pages: {
+        signIn: "/auth/signin",
+      },
 });

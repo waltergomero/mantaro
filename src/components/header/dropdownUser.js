@@ -2,8 +2,9 @@
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeftStartOnRectangleIcon, CogIcon, UserIcon, UserGroupIcon, ChevronDownIcon} from '@heroicons/react/24/outline';
+import { CogIcon, UserIcon, UserGroupIcon, ChevronDownIcon} from '@heroicons/react/24/outline';
 import UserName from "./userName"
+import SignOut from "@/components/auth/signout"
 
 const DropdownUser = () => {
 
@@ -105,10 +106,8 @@ const DropdownUser = () => {
             </Link>
           </li>
         </ul>
-        <button className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
-          <ArrowLeftStartOnRectangleIcon width="24" height= "24" />
-          Log Out
-        </button>
+        <SignOut/>
+
       </div>
       {/* <!-- Dropdown End --> */}
     </div>
