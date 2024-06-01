@@ -5,10 +5,10 @@ import React, { useEffect, useRef, useState, Fragment } from "react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
-import SidebarLinkGroup from "./sidebarLinkGroup"
+import SidebarLinkGroup from "./sidebarLinkGroup";
 import { CalendarDaysIcon, Squares2X2Icon, UserIcon, TableCellsIcon, FolderIcon, 
   CogIcon, ChartBarIcon, QueueListIcon, ArrowRightEndOnRectangleIcon, ArrowLeftIcon,
-  ChevronDownIcon } from '@heroicons/react/24/outline';
+  ChevronDownIcon, UsersIcon } from '@heroicons/react/24/outline';
 
 const Sidebar =  ({ sidebarOpen, setSidebarOpen }) => {
 
@@ -173,7 +173,7 @@ const Sidebar =  ({ sidebarOpen, setSidebarOpen }) => {
                       <Link
                         href="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${(pathname ===
-                          "/forms" ||
+                          "/dashboard/forms" ||
                           pathname.includes("forms")) &&
                           "bg-graydark dark:bg-meta-4"}`}
                         onClick={e => {
@@ -195,7 +195,7 @@ const Sidebar =  ({ sidebarOpen, setSidebarOpen }) => {
                         <ul className="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
                           <li>
                             <Link
-                              href="/forms/form-elements"
+                              href="/dashboard/forms/form-elements"
                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname ===
                                 "/forms/form-elements" && "text-white"}`}
                             >
@@ -204,7 +204,7 @@ const Sidebar =  ({ sidebarOpen, setSidebarOpen }) => {
                           </li>
                           <li>
                             <Link
-                              href="/forms/form-layout"
+                              href="/dashboard/forms/form-layout"
                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname ===
                                 "/forms/form-layout" && "text-white"} `}
                             >
@@ -219,13 +219,24 @@ const Sidebar =  ({ sidebarOpen, setSidebarOpen }) => {
               </SidebarLinkGroup>
               <li>
                 <Link
-                  href="/tables"
+                  href="/dashboard/tables"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes(
                     "tables"
                   ) && "bg-graydark dark:bg-meta-4"}`}
                 >
                   <TableCellsIcon width="20" height="20"/>                
                   Tables
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/dashboard/users"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes(
+                    "settings"
+                  ) && "bg-graydark dark:bg-meta-4"}`}
+                >
+                  <UsersIcon width="20" height="20"/>
+                  Users
                 </Link>
               </li>
               <li>

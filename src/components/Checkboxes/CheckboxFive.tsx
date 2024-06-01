@@ -26,7 +26,7 @@ const CheckboxFive = () => {
             <span className="h-2.5 w-2.5 rounded-full bg-white dark:bg-transparent"></span>
           </div>
         </div>
-        Checkbox Text
+        Checkbox Text 5
       </label>
     </div>
   );

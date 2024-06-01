@@ -2,7 +2,7 @@
 
 import  User  from "@/models/user";
 import db from "@/utils/dbconnection";
-import bcrypt from "bcryptjs";
+import bcryptjs from "bcryptjs";
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { signIn } from '../auth/index';
@@ -62,13 +62,14 @@ export const fetchUserById = async (id) => {
 };
 
 export async function createUser(formData) {
+  console.log("createUser", formData);
 
   try {
     const first_name = formData.get("first_name");
     const last_name = formData.get("last_name");
     const email = formData.get("email");
     const password = formData.get("password");
-    const isAdmin = formData.get("isadmin");
+    const isadmin = formData.get("isadmin");
 
     await db.connect();
     const userexists = await User.findOne({ email: email });
@@ -86,7 +87,7 @@ export async function createUser(formData) {
       last_name,
       email,
       password: hashedPassword,
-      isAdmin: isAdmin,
+      isadmin: isadmin,
     });
 
     await newUser.save();
@@ -100,14 +101,15 @@ export async function createUser(formData) {
 }
 
 export async function updateUser(formData) {
+  console.log("updateUser", formData);
   try {
     const id = formData.get("id");
     const first_name = formData.get("first_name");
     const last_name = formData.get("last_name");
     const email = formData.get("email");
     const password = formData.get("password");
-    const isAdmin = formData.get("isadmin");
-    const isActive = formData.get("isactive");
+    const isadmin = formData.get("isadmin");
+    const isactive = formData.get("isactive");
 
     await db.connect();
     const userexists = await User.findOne({ email: email });
@@ -129,8 +131,8 @@ export async function updateUser(formData) {
           last_name: last_name,
           email: email,
           password: hashedPassword,
-          isAdmin: isAdmin,
-          isActive: isActive,
+          isadmin: isadmin,
+          isactive: isactive,
         };
      }
      else{
@@ -139,8 +141,8 @@ export async function updateUser(formData) {
         first_name: first_name,
         last_name: last_name,
         email: email,
-        isAdmin: isAdmin,
-        isActive: isActive,
+        isadmin: isadmin,
+        isactive: isactive,
         };
      }
       await User.updateOne({ _id: id}, query);
