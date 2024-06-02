@@ -1,6 +1,7 @@
 import { UpdateUser, DeleteUser } from '@/components/users/buttons';
 import { fetchFilteredUsers } from '@/actions/user-actions';
 import { Fragment } from 'react';
+import Image from 'next/image';
 
 export default async function UsersTable({ query, currentPage }) {
   const users = await fetchFilteredUsers(query, currentPage);
@@ -8,29 +9,64 @@ export default async function UsersTable({ query, currentPage }) {
   return (
     <Fragment>
     <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1 mt-2">
-    <div className="px-4 py-6 md:px-6 xl:px-7.5">
+    <div className="px-4 py-4 md:px-6 xl:px-7.5">
         <h4 className="text-xl font-semibold text-black dark:text-white">
           Users
         </h4>
       </div>
       <div className="max-w-full overflow-x-auto">
-        <table className="w-full table-auto">
+      <div className="md:hidden">
+              {users &&
+                users?.map((user) => (
+                  <div
+                    key={user._id.toString()}
+                    className="mb-2 w-full rounded-md bg-white p-4"
+                  >
+                    <div className="flex items-center justify-between border-b pb-4">
+                      <div>
+                        <div className="mb-2 flex items-center">
+                          <Image
+                            src="/user-icon.png"
+                            className="mr-2 rounded-full"
+                            width={28}
+                            height={28}
+                            alt={`${user.first_name}'s profile picture`}
+                          />
+                          <p>{user.last_name + ' ' + user.first_name}</p>
+                        </div>
+                        <p className="text-sm text-gray-500">Email: {user.email}</p>
+                        <div>
+                        <p className="text-sm text-gray-500">Is admin?: {user.isadmin? 'Yes': 'No'}</p>
+                        <p className="text-sm text-gray-500">is active?: {user.isactive? 'Yes': 'No' }</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex w-full items-center justify-between pt-4">
+                      <div className="flex justify-end gap-2">
+                        <UpdateUser id={user._id.toString()} />
+                        <DeleteUser id={user._id.toString()} />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+        <table className="hidden min-w-full table-auto md:table">
           <thead>
             <tr className="bg-gray-2 text-left dark:bg-meta-4">
               <th className="min-w-[220px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11">
-                Last Name
+                Last name
               </th>
               <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
-                First
+                First name
               </th>
               <th className="min-w-[120px] px-4 py-4 font-medium text-black dark:text-white">
                 Email
               </th>
               <th className="px-4 py-4 font-medium text-black dark:text-white">
-                Is Admin?
+                Is admin?
               </th>
               <th className="px-4 py-4 font-medium text-black dark:text-white">
-                Is Active
+                Is active?
               </th>
               <th className="px-4 py-4 font-medium text-black dark:text-white">
                 Actions

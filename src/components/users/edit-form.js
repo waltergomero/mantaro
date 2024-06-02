@@ -79,7 +79,7 @@ console.log("user", user)
         </div>
         <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
           <div className="w-full xl:w-1/2">
-          <CheckboxDefault title="Is User Admin?" name="isadmin" checked={user.isadmin} />
+          <CheckboxDefault  title="Is user admin?" name="isadmin" checked={user.isadmin} />
           </div>
 
   
@@ -87,7 +87,7 @@ console.log("user", user)
         <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
      
           <div className="w-full xl:w-1/2">
-          <CheckboxDefault title="Is User Active?" name="isactive" checked={user.isactive} />
+          <CheckboxDefault  title="Is user active?" name="isactive" checked={user.isactive} />
           </div>
         </div>
         <div className="mt-6 flex justify-end gap-4">

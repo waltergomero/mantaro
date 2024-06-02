@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const CheckboxDefault = ({title, name, checked}) => {
+const CheckboxDefault = ({ title, name, checked}) => {
     const [isChecked, setIsChecked] = useState(!checked == false);
 
   return (
@@ -11,6 +11,7 @@ const CheckboxDefault = ({title, name, checked}) => {
           <input
             type="checkbox"
             name={name}
+            checked={isChecked}
             className="sr-only"
             value={isChecked}
             onChange={() => {
