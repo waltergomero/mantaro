@@ -62,7 +62,7 @@ export async function fetchParentCategories() {
 export const fetchCategoryById = async (id) => {
   try {
     await db.connect();
-    const category = await Category.findById(id).select('_id category_name parent_category_id parent_category_name isActive notes');
+    const category = await Category.findById(id).select('_id category_name parent_category_id parent_category_name isactive notes');
     await db.disconnect();
     return category;
   } catch (err) {
@@ -128,7 +128,7 @@ export async function updateCategory(formData) {
     const category_name = formData.get("category_name");
     const parent_category_id = formData.get("parent_category_id");
     let parent_category_name = "";
-    const isActive = formData.get("isactive");
+    const isactive = formData.get("isactive");
     const notes = formData.get("notes");
 
     await db.connect();
@@ -153,7 +153,7 @@ export async function updateCategory(formData) {
       category_name: category_name,
       parent_category_id: parent_category_id,
       parent_category_name: parent_category_name,
-      isActive: isActive,
+      isactive: isactive,
       notes: notes,
     };
     console.log("query: ", query)
