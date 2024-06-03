@@ -1,7 +1,6 @@
 import Search from '@/components/ui/search';
 import Table from '@/components/users/table';
 import { CreateUser } from '@/components/users/buttons';
-import {  poppins } from '@/components/ui/fonts';
 import Pagination from '@/components/ui/pagination';
 import { fetchUserPages } from '@/actions/user-actions';
 import { Suspense } from 'react';
@@ -16,9 +15,6 @@ export default async function UserPage({ searchParams,}) {
 
   return (
     <div className="w-full">
-      <div className="flex w-full items-center justify-between">
-        <h1 className={`${poppins.className} text-2xl`}>Users</h1>
-      </div>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-2">
         <Search placeholder="Search users..."/>
         <CreateUser />
