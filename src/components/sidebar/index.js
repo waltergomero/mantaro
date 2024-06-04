@@ -8,7 +8,7 @@ import Image from "next/image"
 import SidebarLinkGroup from "./sidebarLinkGroup";
 import { CalendarDaysIcon, Squares2X2Icon, UserIcon, TableCellsIcon, FolderIcon, 
   CogIcon, ChartBarIcon, QueueListIcon, ArrowRightEndOnRectangleIcon, ArrowLeftIcon,
-  ChevronDownIcon, UsersIcon } from '@heroicons/react/24/outline';
+  ChevronDownIcon, UsersIcon, ChartBarSquareIcon, SquaresPlusIcon } from '@heroicons/react/24/outline';
 
 const Sidebar =  ({ sidebarOpen, setSidebarOpen }) => {
 
@@ -235,7 +235,7 @@ const Sidebar =  ({ sidebarOpen, setSidebarOpen }) => {
                     "settings"
                   ) && "bg-graydark dark:bg-meta-4"}`}
                 >
-                  <UsersIcon width="20" height="20"/>
+                  <SquaresPlusIcon width="20" height="20"/>
                   Categories
                 </Link>
               </li>
@@ -246,7 +246,7 @@ const Sidebar =  ({ sidebarOpen, setSidebarOpen }) => {
                     "settings"
                   ) && "bg-graydark dark:bg-meta-4"}`}
                 >
-                  <UsersIcon width="20" height="20"/>
+                  <ChartBarSquareIcon width="20" height="20"/>
                   Status
                 </Link>
               </li>

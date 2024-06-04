@@ -85,6 +85,7 @@ export async function createCategory(formData) {
 
   try {
     console.log("form data: ", formData)
+    console.log("form data actions: ", formData)
     const category_name = formData.get("category_name");
     const parent_category_id = formData.get("parent_category_id");
     let parent_category_name = "";

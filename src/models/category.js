@@ -5,7 +5,7 @@ const categorySchema = new mongoose.Schema(
     category_name: { type: String, required: true, unique: true },
     parent_category_id: { type: String, required: false, default:null },
     parent_category_name: { type: String, required: false, default:null },
-    isActive: { type: Boolean, default: true},
+    isactive: { type: Boolean, default: true},
     notes: { type: String, required: false },
   },
   {
@@ -14,5 +14,5 @@ const categorySchema = new mongoose.Schema(
 );
 
 const Category =
-  mongoose.models.Category || mongoose.model("Category", categorySchema);
+  mongoose.models?.Category || mongoose.model("Category", categorySchema);
 export default Category;

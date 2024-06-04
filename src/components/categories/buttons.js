@@ -23,9 +23,7 @@ export function CreateCategory() {
 export function UpdateCategory({ id }) {
   return (
     <Link
-      href={`/dashboard/categories/${id}/edit`}
-      className="rounded-md border p-2 hover:bg-gray-100"
-    >
+      href={`/dashboard/categories/${id}/edit`}  >
       <PencilIcon className="w-5" />
     </Link>
   );
@@ -35,10 +33,9 @@ export function DeleteCategory({ id }) {
   const deleteCategoryWithId = deleteCategory.bind(null, id);
   return (
     <form action={deleteCategoryWithId}>
-      <Button variant="secondary" className="rounded-md border p-2 hover:bg-gray-100">
-        <span className="sr-only">Delete</span>
-        <TrashIcon className="w-4" />
-      </Button>
+      <button >
+        <TrashIcon className="w-4 text-rose-500" />
+      </button>
     </form>
   );
 }

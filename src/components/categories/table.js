@@ -1,4 +1,4 @@
-import Image from 'next/image';
+
 import { UpdateCategory, DeleteCategory } from '@/components/categories/buttons';
 import { fetchFilteredCategories } from '@/actions/category-actions';
 import { Fragment } from 'react';
