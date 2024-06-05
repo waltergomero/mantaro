@@ -49,9 +49,11 @@ export async function fetchParentCategories() {
 
   try {
     await db.connect();
-    const parentecategories = await Category.find().select('_id category_name').sort({ category_name: 1 }).lean();
+    const _parentcategory = await Category.find().select('_id category_name').sort({ category_name: 1 }).lean();
     await db.disconnect();
-    return parentecategories;
+    
+    const parentcategory = JSON.parse(JSON.stringify(_parentcategory));
+    return parentcategory;
 
   } catch (err) {
     return({error: "Failed to fetch parent categories!"});
@@ -62,9 +64,12 @@ export async function fetchParentCategories() {
 export const fetchCategoryById = async (id) => {
   try {
     await db.connect();
-    const category = await Category.findById(id).select('_id category_name parent_category_id parent_category_name isactive notes');
+    const _category = await Category.findById(id).select('_id category_name parent_category_id parent_category_name isactive notes');
     await db.disconnect();
+
+    const category = JSON.parse(JSON.stringify(_category));
     return category;
+
   } catch (err) {
     return({error: "Failed to fetch category!"});
   }
@@ -84,8 +89,6 @@ export const fetchCategories = async () => {
 export async function createCategory(formData) {
 
   try {
-    console.log("form data: ", formData)
-    console.log("form data actions: ", formData)
     const category_name = formData.get("category_name");
     const parent_category_id = formData.get("parent_category_id");
     let parent_category_name = "";
@@ -124,7 +127,6 @@ export async function createCategory(formData) {
 
 export async function updateCategory(formData) {
   try {
-    console.log("form data actions: ", formData)
     const id = formData.get("id");
     const category_name = formData.get("category_name");
     const parent_category_id = formData.get("parent_category_id");
@@ -143,7 +145,7 @@ export async function updateCategory(formData) {
 
     if(parent_category_id != "") {
     const parentcategoryname = await Category.findOne({ _id: parent_category_id }).select('category_name');
-    console.log("parent category name: ", parentcategoryname.category_name)
+
     if (parentcategoryname) {
       parent_category_name = parentcategoryname.category_name;
     }

@@ -53,8 +53,10 @@ export async function fetchUserPages(query) {
 export const fetchUserById = async (id) => {
   try {
     await db.connect();
-    const user = await User.findById(id);
+    const _user = await User.findById(id);
     await db.disconnect();
+
+    const user = JSON.parse(JSON.stringify(_user));
     return user
   } catch (err) {
     return({error: err + "Failed to fetch user!"});
@@ -101,7 +103,7 @@ export async function createUser(formData) {
 }
 
 export async function updateUser(formData) {
-  console.log("updateUser", formData);
+
   try {
     const id = formData.get("id");
     const first_name = formData.get("first_name");

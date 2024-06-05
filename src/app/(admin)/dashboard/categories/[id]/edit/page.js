@@ -9,6 +9,7 @@ export default async function CategoryEditPage({params}) {
   const [category] = await Promise.all([fetchCategoryById(id)]);
   const parentcategory = await fetchParentCategories();
 
+
   if (!category) {
     notFound();
   }

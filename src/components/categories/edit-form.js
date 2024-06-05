@@ -48,7 +48,7 @@ export default function CategoryEditForm({category, parentcategory}) {
             <select
               name="parent_category_id"
               defaultValue={category.parent_category_id.toString()}
-              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 text-sm outline-2 placeholder:text-gray-500"
+              className="peer block w-full cursor-pointer rounded-md border border-gray-200 px-5 py-3 text-sm outline-2 placeholder:text-gray-500"
               aria-describedby="parent-category-error"
             >
               <option value="">

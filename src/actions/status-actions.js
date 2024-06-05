@@ -19,7 +19,6 @@ export const fetchFilteredStatus = async (q, page) => {
       .sort({ status_type_id: 1, status_name: 1 })
       //.limit(ITEM_PER_PAGE)
       //.skip(ITEM_PER_PAGE * (page - 1));
-    console.log(status);
     await db.disconnect();
 
     return status
@@ -71,8 +70,10 @@ export async function fetchStatusTypeId() {
 export const fetchStatusById = async (id) => {
   try {
     await db.connect();
-    const status = await Status.findById(id);
+    const _status = await Status.findById(id);
     await db.disconnect();
+
+    const status = JSON.parse(JSON.stringify(_status));
     return status;
   } catch (err) {
     return({error: "Failed to fetch status!"});
@@ -108,7 +109,7 @@ export async function createStatus(formData) {
 }
 
 export async function updateStatus(formData) {
-  console.log(formData);
+ 
   try {
     const id = formData.get("id");
     const status_name = formData.get("status_name");

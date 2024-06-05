@@ -47,7 +47,7 @@ const _updateStatus = async (formData) => {
             <select
               name="status_type_id"
               defaultValue={status.status_type_id}
-              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500">
+              className="peer block w-full cursor-pointer rounded-md border border-gray-200 px-5 py-3 pl-10 text-md outline-2 placeholder:text-gray-500">
               <option value="" disabled>
               </option>
                   {statustypeid}
