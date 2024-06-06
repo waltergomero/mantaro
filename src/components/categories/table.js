@@ -16,16 +16,16 @@ export default async function StatusTable({ query, currentPage }) {
         </h4>
       </div>
       <div className="max-w-full overflow-x-auto">
-        <table className="hidden min-w-full table-auto md:table">
+        <table className=" min-w-full table-auto md:table">
           <thead>
             <tr className="bg-gray-2 text-left dark:bg-meta-4">
-              <th className="min-w-[220px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11">
+              <th className="px-4 py-4 font-medium text-black dark:text-white xl:pl-8">
                 Category name
               </th>
-              <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
+              <th className=" px-4 py-4 font-medium text-black dark:text-white">
                 Parent category
               </th>
-              <th className="min-w-[120px] px-4 py-4 font-medium text-black dark:text-white">
+              <th className=" px-4 py-4 font-medium text-black dark:text-white">
                 Is active
               </th>
               <th className="px-4 py-4 font-medium text-black dark:text-white">
@@ -36,7 +36,7 @@ export default async function StatusTable({ query, currentPage }) {
           <tbody>
           {category && category?.map((category) => (
               <tr key={category._id.toString()}>
-                <td className="border-b border-[#eee] px-4 py-4 pl-9 dark:border-strokedark xl:pl-11">
+                <td className="border-b border-[#eee] px-4 py-4 pl-9 dark:border-strokedark xl:pl-8">
                   <h5 className="font-medium text-black dark:text-white">
                     {category.category_name}
                   </h5>

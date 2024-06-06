@@ -3,8 +3,8 @@ import {fetchParentCategories, } from '@/actions/category-actions'
 import Breadcrumbs from "@/components/ui/breadcrumbs";
 
 export default async function CategoryCreatePage() {
-  const _parentcategory = await fetchParentCategories();
-  const parentcategory = JSON.parse(JSON.stringify(_parentcategory));
+  const parentcategory = await fetchParentCategories();
+  
   return (
     <main>
       <Breadcrumbs

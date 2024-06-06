@@ -78,8 +78,9 @@ export const fetchCategoryById = async (id) => {
 export const fetchCategories = async () => {
   try {
     await db.connect();
-    let category = await Category.find().select('_id category_name').lean();
+    let _category = await Category.find().select('_id category_name').lean();
     await db.disconnect();
+    const category = JSON.parse(JSON.stringify(_category));
     return category;
   } catch (err) {
     return({error: "Failed to fetch category!"});
