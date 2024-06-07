@@ -160,7 +160,7 @@ export async function updateCategory(formData) {
       isactive: isactive,
       notes: notes,
     };
-    console.log("query: ", query)
+ 
     await Category.updateOne({ _id: id}, query);
     await db.disconnect();
 

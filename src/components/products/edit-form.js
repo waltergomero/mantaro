@@ -2,13 +2,21 @@
 
 import { useState} from "react";
 import { updateProduct } from "@/actions/product-actions";
-import { SaveProductBtn } from "@/components/products/buttons";
+import { addImage } from "@/actions/image-actions";
+import { SaveProductBtn, SaveImageBtn } from "@/components/products/buttons";
 import Link from "next/link";
 import { toast } from "sonner";
-import CheckboxDefault from "../Checkboxes/checkbox"
+import CheckboxDefault from "../Checkboxes/checkbox";
+import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
+import { TrashIcon,} from "@heroicons/react/24/outline";
+import Compressor from "compressorjs";
+
 
 export default function CategoryEditForm({product, categories}) {
 
+
+  const [productid, setProductid] = useState(product._id.toString());
   const [CategoryValue, setCategoryValue] = useState(product.category_name);
   
   const _updateProduct = async (formData) => {
@@ -24,10 +32,58 @@ export default function CategoryEditForm({product, categories}) {
     setCategoryValue(dropdownName);
   };
 
+  //iamages
+  const [selectedFiles, setSelectedFiles] = useState(null);
+
+  const uploadImagesHandler = (e) =>{
+    setSelectedFiles(Array.from(e.target.files))
+  }
+
+
+ function removeSelectedImage(_name){
+    setSelectedFiles(image => image.filter(x => x.name != _name))
+  };
+
+ function onSubmit(data) {
+    if (selectedFiles != null) {
+      selectedFiles && selectedFiles?.map((image, index) => {
+      console.log(image);
+        const ext = image.name.substr(image.name.lastIndexOf(".") + 1);    
+        new Compressor(image, {
+          quality: 0.9, // 0.6 can also be used, but its not recommended to go below.
+          maxWidth: 1290,
+          maxHeight: 1290,
+          success: (result) => {
+            console.log(result);
+            const formdata = new FormData();
+            formdata.append("product_id", productid);
+            formdata.append("image", result);
+            formdata.append("extension", ext);
+            //axios.post("/api/admin/gallery/add", formdata);
+            addImage(formdata);
+          },
+        });      
+      });
+    } 
+    else {
+      setErrorMessage(true);
+    }
+   // return router.push("/admin/gallery");
+
+  }
+
   return (
-    <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-      <h3 className="font-medium text-black dark:text-white">
+    <>
+
+<Tabs>
+  <TabList>
+    <Tab>Product</Tab>
+    <Tab>Images</Tab>
+  </TabList>
+  <TabPanel>
+  <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+    <div className="border-b border-stroke px-6.5 dark:border-strokedark">
+      <h3 className="font-medium text-black dark:text-white pt-4 pb-2">
         New Product Form
       </h3>
     </div>
@@ -176,7 +232,7 @@ export default function CategoryEditForm({product, categories}) {
                   ></textarea>
           </div>
           <div className="w-full xl:w-1/3">
-             <div className="pt-8 pl-3"><CheckboxDefault  title="Is product active?" name="isactive" checked={product.isactive}/></div>
+            <div className="pt-8 pl-3"><CheckboxDefault  title="Is product active?" name="isactive" checked={product.isactive}/></div>
           </div>
         </div>
 
@@ -192,6 +248,67 @@ export default function CategoryEditForm({product, categories}) {
       </div>
     </form>
   </div>
+  </TabPanel>
+  <TabPanel>
+  <form onSubmit={onSubmit}>
+  <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+    <div className="border-b border-stroke px-6.5 dark:border-strokedark">
+      <h3 className="font-medium text-black dark:text-white pt-4 pb-2">
+        Images
+      </h3>
+    </div>
+    <div className="p-6.5">
+        <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
+          <div className="w-full xl:w-1/5">
+
+                <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                  Attach file
+                </label>
+                <input
+                  type="file"
+                  name="fileupload"
+                  required 
+                  multiple
+                  onChange={uploadImagesHandler}
+                  className="w-full rounded-md border border-stroke p-3 outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-[#EEEEEE] file:px-2.5 file:py-1 file:text-sm focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-strokedark dark:file:bg-white/30 dark:file:text-white"
+                />
+
+          </div>
+          <div className="w-full xl:w-4/5">
+          <div className="flex gap-2">  
+              {selectedFiles && selectedFiles?.map((file,index) => (             
+                <div className="relative" key={index}>
+                            <img  
+                              className="rounded-md"
+                              width="150"
+                              data-key={file.name}                              
+                              src={URL.createObjectURL(file)} alt="uploaded Images" />  
+                  <button className="absolute top-0 right-0 rounded-md "  onClick={() => removeSelectedImage(file.name)}><TrashIcon className="w-6 h-8 text-rose-500"/></button> 
+                  </div>                                                                                                                                                          
+                ))}
+              </div>
+
+          </div>
+        </div>
+        <div className="mt-6 flex justify-end gap-4">
+          <Link
+            href="/dashboard/products"
+            className="flex h-10 items-center rounded-lg bg-gray-400 px-4 text-sm font-medium text-gray-100 transition-colors hover:bg-gray-500"
+          >
+            Cancel
+          </Link>
+          <SaveImageBtn/>
+        </div>
+      </div>
+  </div>
+  </form>
+  </TabPanel>
+
+</Tabs>
+
+
+    </>
 
   );
 }
+

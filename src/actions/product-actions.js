@@ -71,7 +71,7 @@ export const fetchProducts = async () => {
 };
 
 export async function createProduct(formData) {
-console.log("formData: ", formData)
+
   try {
     const product_name = formData.get("product_name");    
     const slug = formData.get("slug");
@@ -106,7 +106,7 @@ console.log("formData: ", formData)
       reorder_level,
       description,
     });
-console.log("newProduct: ", newProduct)
+
     await newProduct.save();
     await db.disconnect();
   } catch (err) {
@@ -157,7 +157,7 @@ export async function updateProduct(formData) {
       description,
       isactive,
     };    
-    console.log("query: ", query)
+
     await Product.updateOne({ _id: id}, query);
     await db.disconnect();
 

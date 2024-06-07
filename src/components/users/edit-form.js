@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import CheckboxDefault from "../Checkboxes/checkbox"
 
 export default function UserEditForm({user}) {
-console.log("user", user)
+
   const _updateUser = async (formData) => {
     const result = await updateUser(formData);
     if (result?.error) {

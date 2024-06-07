@@ -64,8 +64,6 @@ export const fetchUserById = async (id) => {
 };
 
 export async function createUser(formData) {
-  console.log("createUser", formData);
-
   try {
     const first_name = formData.get("first_name");
     const last_name = formData.get("last_name");
