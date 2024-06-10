@@ -44,9 +44,10 @@ export default function CategoryEditForm({product, categories}) {
     setSelectedFiles(image => image.filter(x => x.name != _name))
   };
 
- function onSubmit(data) {
+  const _addImagesToProduct = async (formData) => {
     if (selectedFiles != null) {
-      selectedFiles && selectedFiles?.map((image, index) => {
+      let order = 0;
+      selectedFiles && selectedFiles?.map((image) => {
       console.log(image);
         const ext = image.name.substr(image.name.lastIndexOf(".") + 1);    
         new Compressor(image, {
@@ -54,23 +55,24 @@ export default function CategoryEditForm({product, categories}) {
           maxWidth: 1290,
           maxHeight: 1290,
           success: (result) => {
-            console.log(result);
+            console.log("result: ", result);
             const formdata = new FormData();
             formdata.append("product_id", productid);
             formdata.append("image", result);
             formdata.append("extension", ext);
-            //axios.post("/api/admin/gallery/add", formdata);
-            addImage(formdata);
+            formdata.append("order", order);
+             addImage(formdata);
+            order ++;   
           },
-        });      
+        });
+           
       });
     } 
-    else {
-      setErrorMessage(true);
-    }
-   // return router.push("/admin/gallery");
-
-  }
+    const result = await updateProduct(formData);
+    if (result?.error) {
+      toast.error(result.error);
+    } 
+  };
 
   return (
     <>
@@ -250,7 +252,7 @@ export default function CategoryEditForm({product, categories}) {
   </div>
   </TabPanel>
   <TabPanel>
-  <form onSubmit={onSubmit}>
+  <form action={_addImagesToProduct}>
   <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
     <div className="border-b border-stroke px-6.5 dark:border-strokedark">
       <h3 className="font-medium text-black dark:text-white pt-4 pb-2">

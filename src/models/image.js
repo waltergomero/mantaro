@@ -4,6 +4,7 @@ const imagesSchema = new mongoose.Schema(
   {
     product_id: { type: String, required: true, unique: true },
     image_name: { type: String, required: true, unique: true },
+    path: { type: String, required: true, unique: true },
     format: { type: String, required: false, default:null },
     order: { type: Number, required: false, default:0 },
   },
