@@ -3,7 +3,7 @@ import Table from '@/components/products/table';
 import { CreateProduct } from '@/components/products/buttons';
 import { Suspense } from 'react';
 
-export const metadata = {  title: 'Status',};
+export const metadata = {  title: 'Products',};
 
 export default async function ProductPage({ searchParams,}) {
 
@@ -14,7 +14,7 @@ export default async function ProductPage({ searchParams,}) {
     <div className="w-full">
 
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-2">
-        <Search placeholder="Search for status..." />
+        <Search placeholder="Search for products..." />
         <CreateProduct />
       </div>
       <Suspense key={query + currentPage} >
