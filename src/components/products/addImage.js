@@ -4,10 +4,12 @@ import { SaveImageBtn } from "@/components/products/buttons";
 import { TrashIcon,} from "@heroicons/react/24/outline";
 import Compressor from "compressorjs";
 import { redirect } from 'next/navigation';
+import Link from "next/link";
 
 const addImage = ({productid}) => {
-    const [selectedFiles, setSelectedFiles] = useState(null);
-
+  
+  const [selectedFiles, setSelectedFiles] = useState(null);
+  
   const uploadImagesHandler = (e) =>{
     setSelectedFiles(Array.from(e.target.files))
   }
@@ -47,7 +49,7 @@ const addImage = ({productid}) => {
     else {
       setErrorMessage(true);
     }
-   redirect(`/dashboard/products/${productid}/edit`);
+   redirect(`/dashboard/products/${productid}/edit?tab=1`);
   };
 
   return (
@@ -84,7 +86,8 @@ const addImage = ({productid}) => {
                                     width="150"
                                     data-key={file.name}                              
                                     src={URL.createObjectURL(file)} alt="uploaded Images" />  
-                        <button className="absolute top-0 right-0 rounded-md bg-red-500 "  onClick={() => removeSelectedImage(file.name)}><TrashIcon className="w-6 h-8 text-white"/></button> 
+                        <button className="absolute top-0 right-0 rounded-md bg-rose-500 "  onClick={() => removeSelectedImage(file.name)}>
+                            <TrashIcon className="w-6 h-6 text-white"/></button> 
                         </div>                                                                                                                                                          
                         ))}
                     </div>

@@ -6,7 +6,6 @@ import notFound from "./not-found";
 
 export default async function StatusEditPage({params}) {
   const id = params.id;
-
   const [product] = await Promise.all([fetchProductById(id)]);
   const categories = await fetchCategories();
 

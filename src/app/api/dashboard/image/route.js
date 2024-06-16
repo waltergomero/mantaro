@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
+import db from "@/utils/dbconnection";
+import Images from "@/models/image";
 import fs from "node:fs/promises";
 
 
@@ -30,7 +31,20 @@ export async function POST(req) {
     var format = "Landscape";
      if (dimensions.height > dimensions.width) format = "Portrait";
 
-    await fs.writeFile(`./public/images/product/${imageName}`, buffer);
+    const partialPath = `/images/product/${imageName}`;
+    const path = `./public/${partialPath}`
+    await fs.writeFile(path, buffer);
+    
+    const addImage = new Images({
+      image_name: imageName,
+      product_id: product_id,
+      path: partialPath,
+      format: format,
+      order: order,
+    });
+    db.connect();
+    const data = await addImage.save();
+    db.disconnect();
 
     return NextResponse.json({ status: "success" });
   } catch (e) {

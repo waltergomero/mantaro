@@ -9,9 +9,13 @@ import CheckboxDefault from "../Checkboxes/checkbox";
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import AddImage from "./addImage";
+//import { useSearchParams } from 'next/navigation'
 
 
-export default function CategoryEditForm({product, categories}) {
+export default function ProductEditForm({product, categories}) {
+ // const searchParams = useSearchParams()
+ // console.log("searchParams: ", searchParams)
+  const [tabIndex, setTabIndex] = useState(0);
 
   const [productid, setProductid] = useState(product._id.toString());
   const [CategoryValue, setCategoryValue] = useState(product.category_name);
@@ -30,7 +34,7 @@ export default function CategoryEditForm({product, categories}) {
   };
 
   return (
-    <Tabs>
+    <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
       <TabList>
         <Tab>Product</Tab>
         <Tab>Images</Tab>

@@ -119,6 +119,7 @@ export async function createProduct(formData) {
 
 export async function updateProduct(formData) {
   try {
+    console.log("product updates")
     const id = formData.get("id");
     const product_name = formData.get("product_name");    
     const slug = formData.get("slug");
